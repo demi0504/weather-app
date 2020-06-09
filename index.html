@@ -22,7 +22,7 @@
         <a class="navbar-brand" href="#">Weather Dashboard</a>
     </nav>
     <!--End Nav section-->
-    <div class="container">
+    <div class="container" id="weather-container">
         <div class="row">
             <div class="col-md">
                 <header>
@@ -38,7 +38,7 @@
                     </div>
                 </form>
             </div>
-    <!--Begin current weather wrapper-->
+    <!--Begin current weather section-->
             <div class="col-md">
                 <div class="weather-wrapper hide"> <img src="" class="weather-icon" alt="Weather Icon"/>
                 <p>City: </p> <br/>
@@ -55,6 +55,73 @@
             </div>
         </div>
     </div>
+    <!--End current weather section-->
+    <!--Begin five day forecast-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card" style="width: 10rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" id="date">6/14/20</h5>
+                        <img src="" class="weather-icon" alt="Weather Icon"/>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" id="forecast-temperature">Temp</li>
+                        <li class="list-group-item" id="forecast-humidity">humidity</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 10rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" id="date">6/14/20</h5>
+                        <img src="" class="weather-icon" alt="Weather Icon"/>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" id="forecast-temperature">Temp</li>
+                        <li class="list-group-item" id="forecast-humidity">humidity</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 10rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" id="date">6/14/20</h5>
+                        <img src="" class="weather-icon" alt="Weather Icon"/>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" id="forecast-temperature">Temp</li>
+                        <li class="list-group-item" id="forecast-humidity">humidity</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 10rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" id="date">6/14/20</h5>
+                        <img src="" class="weather-icon" alt="Weather Icon"/>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" id="forecast-temperature">Temp</li>
+                        <li class="list-group-item" id="forecast-humidity">humidity</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card" style="width: 10rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" id="date">6/14/20</h5>
+                        <img src="" class="weather-icon" alt="Weather Icon"/>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" id="forecast-temperature">Temp</li>
+                        <li class="list-group-item" id="forecast-humidity">humidity</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End five day forecast section-->
   <!--Link to JS file-->  
   <script src="weather.js"></script>
 </body>
