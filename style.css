@@ -12,3 +12,19 @@ body {
   margin-top: 30px;
   padding: 20px;
 }
+
+.card {
+  visibility: hidden;
+}
+
+.uv-favorable {
+  background-color: #008000;
+}
+
+.uv-moderate {
+  background-color: #ffff00;
+}
+
+.uv-severe {
+  background-color: #b22222;
+}
