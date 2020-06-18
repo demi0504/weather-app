@@ -10,7 +10,6 @@ $(document).ready(function(){
     //empty array for searched cities to be stored in
     var citySearches = [];
     //function to create buttons for previously searched cities
-    
     loadSearches();
 
     function loadSearches() {
@@ -76,15 +75,17 @@ $(document).ready(function(){
                         method: "GET"
                     }).then(function(response){
                         console.log(response)
-                        $(".uv-index").html("<h5>UV Index: " + response.value);
-                        //whyyyy this no workkkkkkkkk
-                        let uvIndex = $("<span class='uv-index'>").text(response.value);
+                        $("#uv-index").html("<h5>UV Index: " + response.value);
+                        //adds bootstrap badge classes to uv index for favorable or severe uv conditions
                         if(response.value < 3) {
-                            $(uvIndex).addClass("uv-favorable");
+                            $("#uv-index").removeClass();
+                            $("#uv-index").addClass("badge badge-success");
                         } else if (response.value >= 3 && response.value < 8) {
-                            $(uvIndex).addClass("uv-moderate");
+                            $("#uv-index").removeClass();
+                            $("#uv-index").addClass("badge badge-warning");
                         } else if (response.value >= 8) {
-                            $(uvIndex).addClass("uv-severe");
+                            $("#uv-index").removeClass();
+                            $("#uv-index").addClass("badge badge-danger");
                         }  
                     })
 

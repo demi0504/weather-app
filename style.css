@@ -13,6 +13,10 @@ body {
   padding: 20px;
 }
 
+.searched-cities {
+  padding: 20px;
+}
+
 .card {
   visibility: hidden;
 }
