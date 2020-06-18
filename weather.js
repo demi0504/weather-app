@@ -5,12 +5,36 @@ const apiKey = "&appid=c09412399106b3cafc2899cecbc427d6";
 
 
 
+
 $(document).ready(function(){
+    //empty array for searched cities to be stored in
+    var citySearches = [];
+    //function to create buttons for previously searched cities
     
+    loadSearches();
+
+    function loadSearches() {
+        var loadSearches = localStorage.getItem("searchedCities");
+        if (loadSearches == null || loadSearches == "") {
+            return;
+        }
+        citySearches = JSON.parse(loadSearches)
+        for (var i = 0; i < citySearches.length; i++){
+            btn.addClass("btn btn-secondary mx-3 btn-block");
+            btn.html(citySearches[i]);
+            btnDiv.prepend(btn);
+            btn.click(function (event) {
+                var city = $(this).html();
+                console.log("button click: " + city);
+            });
+        }
+    }
+
     //Click event for submit button
     $("#submit-weather").click(function(e){
         event.preventDefault();
         var city = $("#city").val().trim();
+        
         //If city form is filled call weather api and return current weather
         if(city != ''){
             $.ajax({
@@ -18,7 +42,8 @@ $(document).ready(function(){
                 type:  "GET",
                 datatype: "jsonp",
                 success: function(data){
-                    // console.log(data)
+                    
+                    //current weather 
                     var temperature = data.main.temp;
                     var icon = data.weather[0].icon;
                     $(".weather-temperature").html("<h5>Temp: " + temperature +"&#8457;" + "</h5>");
@@ -26,27 +51,41 @@ $(document).ready(function(){
                     $(".weather-wind-speed").html("<h5>Wind Speed: " + data.wind.speed + "</h5>");
                     $(".weather-icon").attr("src", "http://openweathermap.org/img/w/"+icon+".png");
                     $(".city-name").html("<h4>City: " + data.name + "</h4>");
+
+                    var btnDiv = $(".searched-cities");
+                    var btn = $("<button>");
+                    btn.addClass("btn btn-secondary mx-3 btn-block");
+                    btn.html(data.name);
+                    btnDiv.prepend(btn);
+                    btn.click(function (event) {
+                        var city = $(this).html();
+                        console.log("button click: " + city);
+                    });
+                    localStorage.setItem("searchedCities", JSON.stringify(citySearches));  
+                
+            
+                
                     
                     //Get lat and lon for uv index call
                     var longitude = data.coord.lon;
                     var latitude = data.coord.lat;
                     var uvURL = "http://api.openweathermap.org/data/2.5/uvi?" + apiKey +  "&lat=" + latitude + "&lon=" + longitude;
+
                     $.ajax({
                         url: uvURL,
                         method: "GET"
                     }).then(function(response){
                         console.log(response)
-                        var uvIndex = response.value
-                        $(".uv-index").html("<h5>UV Index: " + uvIndex);
-                        if(uvIndex < 3) {
-                            $(".uv-index").addClass("uv-favorable");
-                        } else if (uvIndex >= 3 && uvIndex < 8) {
-                            $(".uv-index").addClass("uv-moderate");
-                        } else if (uvIndex >= 8) {
-                            $(".uv-index").addClass("uv-severe");
-                        }
-
-                        
+                        $(".uv-index").html("<h5>UV Index: " + response.value);
+                        //whyyyy this no workkkkkkkkk
+                        let uvIndex = $("<span class='uv-index'>").text(response.value);
+                        if(response.value < 3) {
+                            $(uvIndex).addClass("uv-favorable");
+                        } else if (response.value >= 3 && response.value < 8) {
+                            $(uvIndex).addClass("uv-moderate");
+                        } else if (response.value >= 8) {
+                            $(uvIndex).addClass("uv-severe");
+                        }  
                     })
 
                     forecastCall();  
@@ -98,8 +137,8 @@ $(document).ready(function(){
             }
             })
         }
+        //Store city input into local storage
         
-
         
     });
 
