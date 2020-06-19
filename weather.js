@@ -2,37 +2,22 @@ const forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=";
 const currentURL = "https://api.openweathermap.org/data/2.5/weather?q=";
 const farenheit = "&units=imperial";
 const apiKey = "&appid=c09412399106b3cafc2899cecbc427d6";
-
+//empty array for searched cities to be stored in
+var citySearches = [];
 
 
 
 $(document).ready(function(){
-    //empty array for searched cities to be stored in
-    var citySearches = [];
+    
+    
     //function to create buttons for previously searched cities
     loadSearches();
-
-    function loadSearches() {
-        var loadSearches = localStorage.getItem("searchedCities");
-        if (loadSearches == null || loadSearches == "") {
-            return;
-        }
-        citySearches = JSON.parse(loadSearches)
-        for (var i = 0; i < citySearches.length; i++){
-            btn.addClass("btn btn-secondary mx-3 btn-block");
-            btn.html(citySearches[i]);
-            btnDiv.prepend(btn);
-            btn.click(function (event) {
-                var city = $(this).html();
-                console.log("button click: " + city);
-            });
-        }
-    }
 
     //Click event for submit button
     $("#submit-weather").click(function(e){
         event.preventDefault();
         var city = $("#city").val().trim();
+        citySearches.push(city); 
         
         //If city form is filled call weather api and return current weather
         if(city != ''){
@@ -50,7 +35,7 @@ $(document).ready(function(){
                     $(".weather-wind-speed").html("<h5>Wind Speed: " + data.wind.speed + "</h5>");
                     $(".weather-icon").attr("src", "http://openweathermap.org/img/w/"+icon+".png");
                     $(".city-name").html("<h4>City: " + data.name + "</h4>");
-
+                    //create buttons for most recently searched cities
                     var btnDiv = $(".searched-cities");
                     var btn = $("<button>");
                     btn.addClass("btn btn-secondary mx-3 btn-block");
@@ -60,10 +45,8 @@ $(document).ready(function(){
                         var city = $(this).html();
                         console.log("button click: " + city);
                     });
+                    
                     localStorage.setItem("searchedCities", JSON.stringify(citySearches));  
-                
-            
-                
                     
                     //Get lat and lon for uv index call
                     var longitude = data.coord.lon;
@@ -102,7 +85,7 @@ $(document).ready(function(){
             type:  "GET",
             datatype: "jsonp",
             success: function(data){
-                
+                console.log(data);
                 
 
                 $(".card").css("visibility","visible");
@@ -138,11 +121,28 @@ $(document).ready(function(){
             }
             })
         }
-        //Store city input into local storage
         
         
     });
-
+    //get city searches from local storage
+    function loadSearches() {
+        var loadSearches = localStorage.getItem("searchedCities");
+        if (loadSearches == null || loadSearches == "") {
+            return;
+        }
+        citySearches = JSON.parse(loadSearches)
+        for (var i = 0; i < citySearches.length; i++){
+            var btnDiv = $(".searched-cities");
+            var btn = $("<button>");
+            btn.addClass("btn btn-secondary mx-3 btn-block");
+            btn.html(citySearches[i]);
+            btnDiv.prepend(btn);
+            btn.click(function (event) {
+                var city = $(this).html();
+                console.log("button click: " + city);
+            });
+        }
+    }
     
 });
 
